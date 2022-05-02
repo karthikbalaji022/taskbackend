@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App{
+  width:100vw;
+  min-height:100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputContainer{
+  background-color: white;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,.5);
+  border-radius: 5px;
+  width:600px;
+  height:200px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  margin:10px
+}
+
+.userInput{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap:20px;
+}
+.userTask{
+  border: 0;
+  background-color: rgba(206, 194, 194,.5);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  width:300px;
+  height:30px;
+  outline: 0;
+}
+.submitButton{
+  border: 0;
+  background-color: blue;
+  color:white;
+  width:90px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.outerContainer{
+  margin:20px;
+  width:40%;
+  min-height:70px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  overflow: hidden;
+}
+.taskCardContainer{
+  width:100%;
+  min-height:80px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.card{
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  height: inherit;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  padding: 5px;
+}
+.buttonContainer{
+  display: flex;
+  border: 0;
+  outline: 0;
+  gap:5px;
+  height: max-content;
+  width: 120px;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 50px;
 }
+.taskContent{
+  outline: 0;
+  border: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width:100%;
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
