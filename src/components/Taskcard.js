@@ -1,13 +1,20 @@
 import react,{useContext,useRef,useState} from "react";
 import { cardDetail } from "../App";
-function Taskcard({item,id}){
+function Taskcard({item,id,strikeThrough}){
     const input=useRef()
     const {tasks,SetTasks}=useContext(cardDetail)
     const [editTrue,SetEdit]=useState(false);
     function remove(e){
-        let prev=tasks.filter((item)=>{
+        let prev=tasks.map((item)=>{
+            if(item.id===id)
+            {
+                item.delete+=1;
+            }
+            return item;
+        })
+         prev=prev.filter((item)=>{
             console.log(item+" "+id)
-            return item.id!=id
+            return item.delete<2
         })
         SetTasks(prev)
     }
@@ -28,12 +35,15 @@ function Taskcard({item,id}){
         })
         SetTasks(prev)
     }
+    const strike={
+        textDecoration:"line-through"
+    }
     return(
         <div className="taskCardContainer">
             <div className="card">{
-                editTrue===false?
-                <input type="text" className="taskContent" value={item} readOnly/>:
-                <input type="text" className="taskContent" placeholder={item} ref={input} onChange={change}/>
+                (strikeThrough==1 || (editTrue===false))?
+                <input type="text" className="taskContent" value={item} style={strikeThrough==1? strike:{}} readOnly/>:
+                <input type="text" className="taskContent" placeholder={item} ref={input} style={{border:"1px solid red"}} onChange={change}/>
             }
                 <div className="buttonContainer">
                 <button className="edit" name="edit" onClick={edit}>Edit</button>

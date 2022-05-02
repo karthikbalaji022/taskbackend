@@ -10,7 +10,7 @@ function App() {
  function addTask(){
   const text=input.current.value
   var prev=tasks.slice();
-  if(text.length>0)prev.push({id:uuid(),text:text})  
+  if(text.length>0)prev.push({id:uuid(),text:text,delete:0})  
 input.current.value=""
    SetTasks(prev)
  }
@@ -30,7 +30,7 @@ input.current.value=""
 
      {
        tasks.map((item,ind)=>{
-         return <Taskcard item={item.text} key={item.id} id={item.id}/>
+         return <Taskcard item={item.text} key={item.id} id={item.id} strikeThrough={item.delete}/>
        })
      }
      </div>
