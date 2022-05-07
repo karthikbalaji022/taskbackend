@@ -1,11 +1,17 @@
 import './App.css';
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useRef} from 'react';
 import Taskcard from './components/Taskcard';
 import { createContext } from 'react';
 import {v4 as uuid} from 'uuid'
 export const cardDetail=createContext();
-function App() {
-  const [tasks,SetTasks]=useState([]);
+ function App() {
+  const data=async ()=>{
+    const taskdata=await fetch('/api/v1/tasks').then((res,req)=>{
+      return res.json()
+    }).then(data=>data)
+  }
+  const [tasks,SetTasks]=useState(data);
+  console.log(tasks," data /*/*/*")
   const input=useRef();
  function addTask(){
   const text=input.current.value
@@ -34,6 +40,7 @@ input.current.value=""
        })
      }
      </div>
+    
      </cardDetail.Provider>
     </div>
   );
