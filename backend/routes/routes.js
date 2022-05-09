@@ -3,7 +3,6 @@ const Task=require('../models/tasks')
 const getAllTask=async (req,res,next)=>{
     try{
         const task=await Task.find({})
-        console.log(task)
         res.status(200).send({task})
     }catch(err){
         res.json(err)

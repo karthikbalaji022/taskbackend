@@ -1,12 +1,13 @@
-import react,{useContext,useRef,useState} from "react";
+import react,{useContext,useEffect,useRef,useState} from "react";
 import { cardDetail } from "../App";
 import axios from "axios";
+var curName="";
 function Taskcard({item,id,strikeThrough}){
     const input=useRef()
     const {tasks,SetTasks}=useContext(cardDetail)
     const [editTrue,SetEdit]=useState(false);
     function remove(e){
-        const curData=axios({
+        axios({
             method:'get',
             url:`/api/v1/tasks/${id}`
         }).then(res=>{
@@ -49,16 +50,23 @@ function Taskcard({item,id,strikeThrough}){
         })
         
     }
-    function change(e){
-        let itemTemp=e.target.value
-        let prev=tasks.map((it)=>{
-            if(it.id===id)
-            {
-                it.text=itemTemp
+    useEffect(()=>{
+        axios({
+            method:'patch',
+            url:`/api/v1/tasks/${id}`,
+            data:{
+                taskName:curName
             }
-            return it;
-        })
-        SetTasks(prev)
+        }).then(res=>console.log("data changed ", res.data)).catch(e=>console.log(e));
+        axios.get('/api/v1/tasks').then(res=>{
+            SetTasks(res.data.task);
+            return res;
+          }).catch(e=>{
+            console.log(e)
+          })
+    },[editTrue ,curName]);
+    function change(e){
+        curName=e.target.value
     }
     const strike={
         textDecoration:"line-through"
