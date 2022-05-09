@@ -21,7 +21,7 @@ const createTask= async (req,res,next)=>{
 
 const getTask=async (req,res,next)=>{
     try{
-        const task=await Task.findOne({taskName:req.params.id})
+        const task=await Task.findOne({_id:req.params.id})
         res.status(200).json(task)
     }catch(err){
         res.status(500).json(err);

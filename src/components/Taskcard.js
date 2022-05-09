@@ -1,22 +1,47 @@
 import react,{useContext,useRef,useState} from "react";
 import { cardDetail } from "../App";
+import axios from "axios";
 function Taskcard({item,id,strikeThrough}){
     const input=useRef()
     const {tasks,SetTasks}=useContext(cardDetail)
     const [editTrue,SetEdit]=useState(false);
     function remove(e){
-        let prev=tasks.map((item)=>{
-            if(item.id===id)
+        const curData=axios({
+            method:'get',
+            url:`/api/v1/tasks/${id}`
+        }).then(res=>{
+            const retData=res.data;
+            if(retData.delete==1)
             {
-                item.delete+=1;
+                axios({
+                    method:'delete',
+                    url:`/api/v1/tasks/${id}`
+                })
+                axios.get('/api/v1/tasks').then(res=>{
+                    SetTasks(res.data.task);
+                    return res;
+                  }).catch(e=>{
+                    console.log(e)
+                  })
+            }else{
+                axios({
+                    method:'patch',
+                    url:`/api/v1/tasks/${id}`,
+                    data:{
+                        ...retData,
+                        delete:1
+                    }
+                })
+                axios.get('/api/v1/tasks').then(res=>{
+                    SetTasks(res.data.task);
+                    return res;
+                  }).catch(e=>{
+                    console.log(e)
+                  })
             }
-            return item;
-        })
-         prev=prev.filter((item)=>{
-            console.log(item+" "+id)
-            return item.delete<2
-        })
-        SetTasks(prev)
+            
+        });
+        // SetTasks(prev)
     }
     function edit(e){
         SetEdit((prev)=>{

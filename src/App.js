@@ -1,25 +1,45 @@
 import './App.css';
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef, useEffect} from 'react';
 import Taskcard from './components/Taskcard';
 import { createContext } from 'react';
 import {v4 as uuid} from 'uuid'
+import axios from 'axios'
+
 export const cardDetail=createContext();
- function App() {
-  const data=async ()=>{
-    const taskdata=await fetch('/api/v1/tasks').then((res,req)=>{
-      return res.json()
-    }).then(data=>data)
-  }
-  const [tasks,SetTasks]=useState(data);
-  console.log(tasks," data /*/*/*")
-  const input=useRef();
- function addTask(){
-  const text=input.current.value
-  var prev=tasks.slice();
-  if(text.length>0)prev.push({id:uuid(),text:text,delete:0})  
-input.current.value=""
-   SetTasks(prev)
- }
+
+   function App() {
+  
+  
+   const [tasks,SetTasks]=useState([]);
+   useEffect(()=>{
+    axios.get('/api/v1/tasks').then(res=>{
+      SetTasks(res.data.task);
+      return res;
+    }).catch(e=>{
+      console.log(e)
+    })
+   },[])
+   const input=useRef();
+   function addTask(){
+     const text=input.current.value
+     axios({
+       method:'post',
+       url:'/api/v1/tasks',
+       data:{
+         taskName:text,
+         completed:false,
+         delete:0
+       }
+     });
+     
+    axios.get('/api/v1/tasks').then(res=>{
+      SetTasks(res.data.task);
+      return res;
+    }).catch(e=>{
+      console.log(e)
+    })
+    }
+    
   return (
     <div className="App">
      <div className='inputContainer'>
@@ -36,7 +56,7 @@ input.current.value=""
 
      {
        tasks.map((item,ind)=>{
-         return <Taskcard item={item.text} key={item.id} id={item.id} strikeThrough={item.delete}/>
+         return <Taskcard item={item.taskName} key={item._id} id={item._id} strikeThrough={item.delete}/>
        })
      }
      </div>
